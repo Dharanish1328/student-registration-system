@@ -1,0 +1,79 @@
+<div class="student-list-container">
+
+  <!-- Header -->
+  <div class="header-section">
+    <h2>📋 Student List</h2>
+    <p>Registered students information</p>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-section" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading students...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && students.length === 0">
+    <h3>No Students Found</h3>
+    <p>No students have been registered yet.</p>
+  </div>
+
+  <!-- Student Table -->
+  <div class="table-container" *ngIf="students.length > 0">
+
+    <table class="student-table">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Student Name</th>
+          <th>Email</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>Course</th>
+          <th>Registration Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let student of students">
+
+          <td>{{ student.id }}</td>
+
+          <td>
+            <div class="student-name">
+              👨‍🎓 {{ student.studentName }}
+            </div>
+          </td>
+
+          <td>{{ student.email }}</td>
+
+          <td>{{ student.dateOfBirth | date:'dd/MM/yyyy' }}</td>
+
+          <td>
+            <span class="gender-badge">
+              {{ student.gender }}
+            </span>
+          </td>
+
+          <td>{{ student.course }}</td>
+
+          <td>
+            {{ student.registrationDate | date:'dd/MM/yyyy hh:mm a' }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

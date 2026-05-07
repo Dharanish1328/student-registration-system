@@ -1,0 +1,31 @@
+/* app.component.css */
+nav {
+  padding: 1rem;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #4f46e5;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+nav a.active {
+  background-color: #4f46e5;
+  color: white;
+}
+
+hr {
+  margin: 1rem 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+}

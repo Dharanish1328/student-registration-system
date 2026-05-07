@@ -1,0 +1,219 @@
+<div class="registration-container">
+  <div class="registration-card">
+    <!-- Header Section -->
+    <div class="card-header">
+      <div class="header-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="white"/>
+        </svg>
+      </div>
+      <h2>Student Registration</h2>
+      <p>Join our learning community today</p>
+    </div>
+
+    <!-- Form Section -->
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="registration-form">
+      
+      <!-- Student Name Field -->
+      <div class="form-group">
+        <label for="studentName">
+          <span class="label-icon">👨‍🎓</span>
+          Full Name
+          <span class="required-star">*</span>
+        </label>
+        <input 
+          type="text"
+          id="studentName"
+          placeholder="Enter student's full name"
+          formControlName="studentName"
+          [class.is-invalid]="f['studentName'].invalid && f['studentName'].touched"
+          [class.is-valid]="f['studentName'].valid && f['studentName'].touched">
+        <div class="error-messages" *ngIf="f['studentName'].invalid && f['studentName'].touched">
+          <span *ngIf="f['studentName'].errors?.['required']">⚠ Student name is required</span>
+          <span *ngIf="f['studentName'].errors?.['minlength']">⚠ Name must be at least 3 characters</span>
+          <span *ngIf="f['studentName'].errors?.['maxlength']">⚠ Name cannot exceed 50 characters</span>
+        </div>
+        <div class="valid-feedback" *ngIf="f['studentName'].valid && f['studentName'].touched">
+          ✓ Looks good!
+        </div>
+      </div>
+
+      <!-- Email Field with Duplicate Error Handling -->
+      <div class="form-group">
+        <label for="email">
+          <span class="label-icon">📧</span>
+          Email Address
+          <span class="required-star">*</span>
+        </label>
+        <input 
+          type="email"
+          id="email"
+          placeholder="student@example.com"
+          formControlName="email"
+          [class.is-invalid]="(f['email'].invalid && f['email'].touched) || f['email'].errors?.['duplicate']"
+          [class.is-valid]="f['email'].valid && f['email'].touched && !f['email'].errors?.['duplicate']">
+        <div class="error-messages" *ngIf="(f['email'].invalid && f['email'].touched) || f['email'].errors?.['duplicate']">
+          <span *ngIf="f['email'].errors?.['required']">⚠ Email is required</span>
+          <span *ngIf="f['email'].errors?.['email']">⚠ Please enter a valid email address</span>
+          <span *ngIf="f['email'].errors?.['duplicate']" class="duplicate-error">
+            🔴 This email is already registered! Please use a different email address.
+          </span>
+        </div>
+        <div class="valid-feedback" *ngIf="f['email'].valid && f['email'].touched && !f['email'].errors?.['duplicate']">
+          ✓ Email address is available
+        </div>
+      </div>
+
+      <!-- Two Column Layout for Date and Gender -->
+      <div class="form-row">
+        <!-- Date of Birth Field -->
+        <div class="form-group">
+          <label for="dateOfBirth">
+            <span class="label-icon">🎂</span>
+            Date of Birth
+            <span class="required-star">*</span>
+          </label>
+          <input 
+            type="date"
+            id="dateOfBirth"
+            formControlName="dateOfBirth"
+            [class.is-invalid]="f['dateOfBirth'].invalid && f['dateOfBirth'].touched"
+            [class.is-valid]="f['dateOfBirth'].valid && f['dateOfBirth'].touched">
+          <div class="error-messages" *ngIf="f['dateOfBirth'].invalid && f['dateOfBirth'].touched">
+            <span *ngIf="f['dateOfBirth'].errors?.['required']">⚠ Date of birth is required</span>
+            <span *ngIf="f['dateOfBirth'].errors?.['underAge']">⚠ Must be at least 16 years old</span>
+          </div>
+          <div class="valid-feedback" *ngIf="f['dateOfBirth'].valid && f['dateOfBirth'].touched">
+            ✓ Valid date
+          </div>
+        </div>
+
+        <!-- Gender Field -->
+        <div class="form-group">
+          <label for="gender">
+            <span class="label-icon">👤</span>
+            Gender
+            <span class="required-star">*</span>
+          </label>
+          <select 
+            id="gender"
+            formControlName="gender"
+            [class.is-invalid]="f['gender'].invalid && f['gender'].touched"
+            [class.is-valid]="f['gender'].valid && f['gender'].touched">
+            <option value="" disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+          <div class="error-messages" *ngIf="f['gender'].invalid && f['gender'].touched">
+            <span>⚠ Please select a gender</span>
+          </div>
+          <div class="valid-feedback" *ngIf="f['gender'].valid && f['gender'].touched">
+            ✓ Selected
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Field -->
+      <div class="form-group">
+        <label for="course">
+          <span class="label-icon">📚</span>
+          Course
+          <span class="required-star">*</span>
+        </label>
+        <input 
+          type="text"
+          id="course"
+          placeholder="e.g., Computer Science, Mathematics, Physics"
+          formControlName="course"
+          [class.is-invalid]="f['course'].invalid && f['course'].touched"
+          [class.is-valid]="f['course'].valid && f['course'].touched">
+        <div class="error-messages" *ngIf="f['course'].invalid && f['course'].touched">
+          <span *ngIf="f['course'].errors?.['required']">⚠ Course name is required</span>
+          <span *ngIf="f['course'].errors?.['minlength']">⚠ Course name must be at least 2 characters</span>
+        </div>
+        <div class="valid-feedback" *ngIf="f['course'].valid && f['course'].touched">
+          ✓ Course selected
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="reset-btn" (click)="resetForm()" [disabled]="isLoading">
+          <span class="btn-icon">🔄</span>
+          <span>Reset</span>
+        </button>
+        <button type="submit" class="submit-btn" [disabled]="studentForm.invalid || isLoading">
+          <span *ngIf="!isLoading" class="btn-icon">📝</span>
+          <span *ngIf="isLoading" class="spinner"></span>
+          <span>{{ isLoading ? 'Registering...' : 'Register Student' }}</span>
+          <span *ngIf="!isLoading" class="btn-arrow">→</span>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Enhanced Message Section -->
+    <div class="message-section" *ngIf="successMessage || errorMessage || errorDetails">
+      <!-- Success Message -->
+      <div class="alert success" *ngIf="successMessage">
+        <div class="alert-icon">✅</div>
+        <div class="alert-content">
+          <strong>Success!</strong>
+          <p>{{ successMessage }}</p>
+        </div>
+        <button class="alert-close" (click)="successMessage = ''">×</button>
+      </div>
+      
+      <!-- Error Message with Details -->
+      <div class="alert error" *ngIf="errorMessage">
+        <div class="alert-icon">❌</div>
+        <div class="alert-content">
+          <strong>Registration Failed!</strong>
+          <p>{{ errorMessage }}</p>
+          
+          <!-- Show detailed error information -->
+          <div class="error-details" *ngIf="errorDetails">
+            <div class="detail-item" *ngIf="errorDetails.type === 'duplicate'">
+              <span class="detail-icon">📧</span>
+              <span>{{ errorDetails.message }}</span>
+            </div>
+            <div class="detail-item" *ngIf="errorDetails.type === 'server'">
+              <span class="detail-icon">🔧</span>
+              <span>{{ errorDetails.message }}</span>
+            </div>
+            <div class="detail-item" *ngIf="errorDetails.message && errorDetails.type !== 'duplicate' && errorDetails.type !== 'server'">
+              <span class="detail-icon">ℹ️</span>
+              <span>{{ errorDetails.message }}</span>
+            </div>
+          </div>
+          
+          <!-- Suggestions based on error type -->
+          <div class="error-suggestions" *ngIf="errorDetails?.type === 'duplicate'">
+            <p class="suggestion-title">💡 Suggestions:</p>
+            <ul>
+              <li>Use a different email address</li>
+              <li>Check if you've already registered</li>
+              <li>Try to login if you already have an account</li>
+              <li>Contact support if you believe this is an error</li>
+            </ul>
+          </div>
+        </div>
+        <button class="alert-close" (click)="clearError()">×</button>
+      </div>
+    </div>
+
+    <!-- Form Status -->
+    <div class="form-status" *ngIf="studentForm.touched && !successMessage && !errorMessage">
+      <div class="status-item" *ngIf="!studentForm.valid">
+        <span class="status-icon">⚠️</span>
+        <span>Please fill all required fields correctly</span>
+      </div>
+      <div class="status-item success" *ngIf="studentForm.valid">
+        <span class="status-icon">✓</span>
+        <span>Form is ready to submit</span>
+      </div>
+    </div>
+  </div>
+</div>
